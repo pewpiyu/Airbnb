@@ -11,8 +11,8 @@ export default function Home({ exploreData, cardData }) {
   return (
     <div className="">
       <Head>
-        <title>AirBNB</title>
-        <link rel="icon" href="/favicon.ico" />
+        <title>AirBnb</title>
+        <link rel="icon" href="/top.png" />
       </Head>
       {/* Header */}
       <Header />
@@ -52,7 +52,6 @@ export default function Home({ exploreData, cardData }) {
       </main>
 
       <Footer />
-
     </div>
   );
 }
