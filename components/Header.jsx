@@ -10,12 +10,14 @@ import {
 import "react-date-range/dist/styles.css"; // main style file
 import "react-date-range/dist/theme/default.css"; // theme css file
 import { DateRangePicker } from "react-date-range";
+import { useRouter } from "next/dist/client/router";
 
-const Header = () => {
+const Header = ({ placeholder }) => {
   const [searchInput, setSearchInput] = useState("");
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
   const [guests, setGuests] = useState(0);
+  const router = useRouter();
 
   const selectionRange = {
     startDate: startDate,
@@ -31,11 +33,25 @@ const Header = () => {
   const cancel = () => {
     setSearchInput("");
   };
+  const search = () => {
+    router.push({
+      pathname: "/search",
+      query: {
+        location: searchInput,
+        startDate: startDate.toISOString(),
+        endDate: endDate.toISOString(),
+        guests,
+      },
+    });
+  };
 
   return (
     <header className="sticky top-0 z-50 grid grid-cols-3 bg-white shadow-md p-3 sm:px-7 md:px-9">
       {/* left */}
-      <div className="relative flex items-center h-10 my-auto cursor-pointer">
+      <div
+        onClick={() => router.push("/")}
+        className="relative flex items-center h-10 my-auto cursor-pointer"
+      >
         <Image
           src="/logo.webp"
           layout="fill"
@@ -51,7 +67,7 @@ const Header = () => {
           value={searchInput}
           className="flex-grow outline-none px-2 bg-transparent text-sm text-gray-600 placeholder-gray-400"
           type="text"
-          placeholder="search"
+          placeholder={placeholder || "search"}
         />
         <SearchIcon className="hidden md:inline-flex h-8 bg-red-300 text-white rounded-full p-2 cursor-pointer mr-1" />
       </div>
@@ -85,6 +101,7 @@ const Header = () => {
               className="outline-none w-12 pl-3 text-red-400"
               type="number"
               name=""
+              placeholder="1"
               id=""
               min="1"
               onChange={(e) => {
@@ -96,7 +113,9 @@ const Header = () => {
             <button className="flex-grow text-gray-500" onClick={cancel}>
               Cancel
             </button>
-            <button className="flex-grow text-red-400">Search</button>
+            <button onClick={search} className="flex-grow text-red-400">
+              Search
+            </button>
           </div>
         </div>
       )}
