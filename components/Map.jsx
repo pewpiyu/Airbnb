@@ -45,6 +45,7 @@ const Map = ({ searchResults }) => {
 
         {selectedLocation.long === result.long ? (
             <Popup
+            className="z-10"
              onClose={() => setSelectedLocation({})}
              closeOnClick={true}
              latitude={result.lat}
